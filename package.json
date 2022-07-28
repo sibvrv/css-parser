@@ -1,6 +1,6 @@
 {
   "name": "css-parser",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A lightweight CSS parser in JavaScript / TypeScript.",
   "author": "Roman Vereshchagin",
   "license": "MIT",
@@ -10,6 +10,9 @@
     "prepublish": "npm run build",
     "build": "node_modules/.bin/tsc",
     "test": "mocha -r ts-node/register src/**/*.spec.ts"
+  },
+  "engines": {
+    "node": "<=14"
   },
   "dependencies": {},
   "devDependencies": {
