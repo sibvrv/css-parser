@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.parseCSS = void 0;
 var regexStringsAddComments = /(?:"(?:\\[\s\S]|[^"])*"|'(?:\\[\s\S]|[^'])*')|(\/\*([\s\S]*?)\*\/)/gi;
 var regexCodeBlock = /{[^{}"']*}/gi;
 var regexComments = /\0c\d+\0/g;
@@ -52,7 +53,7 @@ function regexEach(pattern, source, callback) {
  */
 function parseNode(name, source, pattern, nodes, replace) {
     for (var match = void 0; (match = pattern.exec(source)) !== null;) {
-        nodes.push({ selector: "@" + name, type: name, styles: replace(match[0]) });
+        nodes.push({ selector: "@".concat(name), type: name, styles: replace(match[0]) });
     }
     return source.replace(pattern, '');
 }
@@ -63,7 +64,7 @@ function parseNode(name, source, pattern, nodes, replace) {
  */
 function parseCSS(source) {
     var code = [];
-    var pushCode = function (text) { return "\0" + (text[0] === '{' ? 'b' : text[0] === '/' ? 'c' : '') + (code.push(text) - 1) + "\0"; };
+    var pushCode = function (text) { return "\0".concat(text[0] === '{' ? 'b' : text[0] === '/' ? 'c' : '').concat(code.push(text) - 1, "\0"); };
     var popCode = function (text) { return text.replace(/\0.?\d+\0/gi, function (v) { return (v = v.slice(1, -1), v[0] === 'b' || v[0] === 'c') ? code[+v.substr(1)] : code[+v]; }); };
     var popCodeRecursive = function (text) {
         for (var index = -1; (index = text.indexOf('\0', index)) >= 0;) {
